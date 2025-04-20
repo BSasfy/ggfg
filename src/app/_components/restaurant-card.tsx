@@ -1,33 +1,44 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface RestaurantProps {
   restaurantDetails: string[];
+  isFeatured?: boolean;
 }
 
-export function RestaurantCard({ restaurantDetails }: RestaurantProps) {
+export function RestaurantCard({
+  restaurantDetails,
+  isFeatured,
+}: RestaurantProps) {
   const [name, discountType, discountDays, address, description] =
     restaurantDetails;
 
-  console.log(name);
+  const urlSlug = name?.replace(/\s+/g, "-")?.toLowerCase();
 
   return (
-    <div className="grid h-40 grid-cols-4 content-center rounded-2xl border-2 border-gray-300 bg-white text-3xl shadow-lg">
-      <Image
-        src="/restaurant.png"
-        height={150}
-        width={150}
-        alt="restaurants"
-        style={{ objectFit: "contain" }}
-      />
+    <Link href={`/restaurant/${urlSlug}`}>
+      <div
+        className={`${isFeatured ? "flex flex-col" : "grid grid-cols-4"} h-40 content-center rounded-2xl border-2 border-gray-300 bg-white text-3xl shadow-lg`}
+      >
+        {!isFeatured && (
+          <Image
+            src="/restaurant.png"
+            height={150}
+            width={150}
+            alt="restaurants"
+            style={{ objectFit: "contain" }}
+          />
+        )}
 
-      <div className="col-span-3 my-auto flex-col text-center">
-        <div className="text-4xl">{name}</div>
-        <div className="text-3xl">
-          {discountType}, {discountDays}
+        <div className="col-span-3 my-auto flex-col py-4 text-center">
+          <div className="xs:text-3xl text-xl sm:text-4xl">{name}</div>
+          <div className="xs:text-2xl text-lg sm:text-3xl">
+            {discountType}, {discountDays}
+          </div>
+
+          {!isFeatured && <div className="text-xl sm:text-2xl">{address}</div>}
         </div>
-
-        <div className="text-2xl">{address}</div>
       </div>
-    </div>
+    </Link>
   );
 }
