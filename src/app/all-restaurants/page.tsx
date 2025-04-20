@@ -9,10 +9,8 @@ export default async function Restaurants() {
   let header;
   let restaurantList: string[][] = [];
 
-  function handleResponse(restaurantsArray: string[][]) {
-    header = restaurantsArray.shift();
-
-    restaurantList = restaurantsArray;
+  function handleResponse(restaurantsArray: () => ArrayIterator<string[]>) {
+    console.log(restaurantsArray, "<<<N");
   }
 
   await fetch(
@@ -20,7 +18,7 @@ export default async function Restaurants() {
   )
     .then((response) => response.json())
     .then((restaurantsObject: string[][]) => {
-      handleResponse(restaurantsObject);
+      handleResponse(restaurantsObject.values);
     });
 
   return (
