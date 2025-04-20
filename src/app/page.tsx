@@ -10,10 +10,10 @@ export default async function Home() {
   const apiKey = "AIzaSyCRJwEkS1f9rVZ1ATUrRmmkt9ykfl32C3I";
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
-  let header = {};
-  let featuredList: any[] = [];
+  let header: string[] | undefined = [];
+  let featuredList: string[][] = [];
 
-  function handleResponse(restaurantsArray: any[]) {
+  function handleResponse(restaurantsArray: string[][]) {
     header = restaurantsArray.shift();
 
     featuredList = restaurantsArray.slice(0, 4);
