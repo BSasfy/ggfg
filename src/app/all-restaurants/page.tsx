@@ -6,10 +6,10 @@ export default async function Restaurants() {
   const session = await auth();
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
-  let header = {};
+  let header;
   let restaurantList: any[] = [];
 
-  function handleResponse(restaurantsArray: any) {
+  function handleResponse(restaurantsArray: object[]) {
     header = restaurantsArray.shift();
 
     restaurantList = restaurantsArray;
