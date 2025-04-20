@@ -6,18 +6,18 @@ export default async function Restaurants() {
   const session = await auth();
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
-  let header;
-  let restaurantList: string[][] = [];
+  let header: string[] | undefined = [];
+  const restaurantList: string[][] = [];
 
-  function handleResponse(restaurantsArray: () => ArrayIterator<string[]>) {
-    console.log(restaurantsArray, "<<<N");
+  function handleResponse(restaurantsArray: string[][]) {
+    header = restaurantsArray.shift();
   }
 
   await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:E?key=${apiKey}`,
   )
     .then((response) => response.json())
-    .then((restaurantsObject: string[][]) => {
+    .then((restaurantsObject) => {
       handleResponse(restaurantsObject.values);
     });
 
