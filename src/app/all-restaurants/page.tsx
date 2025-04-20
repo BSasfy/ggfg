@@ -19,7 +19,9 @@ export default async function Restaurants() {
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:E?key=${apiKey}`,
   )
     .then((response) => response.json())
-    .then((restaurantsObject) => handleResponse(restaurantsObject.values));
+    .then((restaurantsObject: string[][]) => {
+      handleResponse(restaurantsObject);
+    });
 
   return (
     <main className="text-brand-medium-gray flex min-h-screen flex-col gap-10 p-10">
