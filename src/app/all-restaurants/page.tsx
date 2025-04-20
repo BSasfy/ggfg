@@ -7,9 +7,9 @@ export default async function Restaurants() {
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
   let header;
-  let restaurantList: any[] = [];
+  let restaurantList: string[][] = [];
 
-  function handleResponse(restaurantsArray: object[]) {
+  function handleResponse(restaurantsArray: string[][]) {
     header = restaurantsArray.shift();
 
     restaurantList = restaurantsArray;
