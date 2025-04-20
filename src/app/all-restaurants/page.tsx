@@ -7,10 +7,11 @@ export default async function Restaurants() {
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
   let header: string[] | undefined = [];
-  const restaurantList: string[][] = [];
+  let restaurantList: string[][] = [];
 
   function handleResponse(restaurantsArray: string[][]) {
     header = restaurantsArray.shift();
+    restaurantList = restaurantsArray;
   }
 
   await fetch(
