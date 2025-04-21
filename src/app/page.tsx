@@ -72,7 +72,7 @@ export default async function Home() {
             </div>
           ))}
         </div>
-        <div className="flex w-full place-content-center pt-4 sm:hidden">
+        <div className="flex w-full place-content-center pt-4 pb-6 sm:hidden">
           <Link
             href={"/all-restaurants"}
             className="bg-brand-green border-brand-gray rounded-4xl border-2 px-10 py-3 text-2xl"
