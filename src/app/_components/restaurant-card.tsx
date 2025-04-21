@@ -13,7 +13,7 @@ export function RestaurantCard({
   const [name, discountType, discountDays, address, description] =
     restaurantDetails;
 
-  const urlSlug = name?.replace(/\s+/g, "-")?.toLowerCase();
+  const urlSlug = name?.replace(/\s+/g, "-");
 
   return (
     <Link href={`/restaurant/${urlSlug}`}>
@@ -23,15 +23,21 @@ export function RestaurantCard({
         {!isFeatured && (
           <Image
             src="/restaurant.png"
-            height={150}
-            width={150}
+            height={160}
+            width={160}
             alt="restaurants"
-            style={{ objectFit: "contain" }}
+            style={{
+              objectFit: "cover",
+              height: "160px",
+              borderRadius: "16px 0px 0px 16px",
+            }}
           />
         )}
 
-        <div className="col-span-3 my-auto flex-col py-4 text-center">
-          <div className="xs:text-3xl text-xl sm:text-4xl">{name}</div>
+        <div className="col-span-3 my-auto flex-col py-4 text-center md:flex-row">
+          <div className="xs:text-3xl text-xl font-bold sm:text-4xl">
+            {name}
+          </div>
           <div className="xs:text-2xl text-lg sm:text-3xl">
             {discountType}, {discountDays}
           </div>

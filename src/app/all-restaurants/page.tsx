@@ -3,7 +3,7 @@ import { RestaurantCard } from "../_components/restaurant-card";
 import type { JsonArray } from "next-auth/adapters";
 
 export default async function Restaurants() {
-  const apiKey = "AIzaSyCRJwEkS1f9rVZ1ATUrRmmkt9ykfl32C3I";
+  const apiKey = "AIzaSyDt8lur7UCIe5QA_WFlEZkMG0hm5cPJTsE";
   const session = await auth();
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 

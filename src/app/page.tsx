@@ -8,7 +8,7 @@ import type { JsonArray } from "next-auth/adapters";
 export default async function Home() {
   const session = await auth();
 
-  const apiKey = "AIzaSyCRJwEkS1f9rVZ1ATUrRmmkt9ykfl32C3I";
+  const apiKey = "AIzaSyDt8lur7UCIe5QA_WFlEZkMG0hm5cPJTsE";
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
   let header: string[] | undefined = [];
@@ -53,14 +53,16 @@ export default async function Home() {
           <div className="text-brand-medium-gray content-center text-3xl sm:text-5xl">
             Featured Offers
           </div>
-          <Link
-            href={"/all-restaurants"}
-            className="bg-brand-green border-brand-gray self-center rounded-4xl border-2 px-6 py-2 text-xl sm:py-4 sm:text-3xl"
-          >
-            See All
-          </Link>
+          <div className="max-sm:hidden">
+            <Link
+              href={"/all-restaurants"}
+              className="bg-brand-green border-brand-gray self-center rounded-4xl border-2 px-6 py-2 text-xl sm:py-4 sm:text-3xl"
+            >
+              See All
+            </Link>
+          </div>
         </div>
-        <div className="text-brand-medium-gray grid grid-cols-2 gap-6 py-10 sm:gap-10">
+        <div className="text-brand-medium-gray grid grid-cols-2 gap-6 py-6 sm:gap-10 sm:py-10">
           {featuredList.map((fetauredRestaurant, index) => (
             <div key={index}>
               <RestaurantCard
@@ -69,6 +71,14 @@ export default async function Home() {
               />
             </div>
           ))}
+        </div>
+        <div className="flex w-full place-content-center pt-4 sm:hidden">
+          <Link
+            href={"/all-restaurants"}
+            className="bg-brand-green border-brand-gray rounded-4xl border-2 px-10 py-3 text-2xl"
+          >
+            See All
+          </Link>
         </div>
       </div>
     </main>
