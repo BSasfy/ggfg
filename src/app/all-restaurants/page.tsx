@@ -1,5 +1,6 @@
 import { auth } from "@/server/auth";
 import { RestaurantCard } from "../_components/restaurant-card";
+import type { JsonArray } from "next-auth/adapters";
 
 export default async function Restaurants() {
   const apiKey = "AIzaSyCRJwEkS1f9rVZ1ATUrRmmkt9ykfl32C3I";
@@ -9,17 +10,19 @@ export default async function Restaurants() {
   let header: string[] | undefined = [];
   let restaurantList: string[][] = [];
 
-  function handleResponse(restaurantsArray: string[][]) {
-    header = restaurantsArray.shift();
-    restaurantList = restaurantsArray;
+  function handleResponse(restaurantsObject: object) {
+    // eslint-disable-next-line
+    const tempArray: string[][] = Object.values(restaurantsObject)[2];
+    header = tempArray.shift();
+    restaurantList = tempArray;
   }
 
   await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:E?key=${apiKey}`,
   )
     .then((response) => response.json())
-    .then((restaurantsObject) => {
-      handleResponse(restaurantsObject.values);
+    .then((restaurantsObject: object) => {
+      handleResponse(restaurantsObject);
     });
 
   return (

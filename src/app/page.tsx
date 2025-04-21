@@ -3,6 +3,7 @@ import Image from "next/image";
 import { auth } from "@/server/auth";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
+import type { JsonArray } from "next-auth/adapters";
 
 export default async function Home() {
   const session = await auth();
@@ -13,17 +14,19 @@ export default async function Home() {
   let header: string[] | undefined = [];
   let featuredList: string[][] = [];
 
-  function handleResponse(restaurantsArray: string[][]) {
-    header = restaurantsArray.shift();
+  function handleResponse(restaurantsObject: object) {
+    // eslint-disable-next-line
+    const tempArray: string[][] = Object.values(restaurantsObject)[2];
+    header = tempArray.shift();
 
-    featuredList = restaurantsArray.slice(0, 4);
+    featuredList = tempArray.slice(0, 4);
   }
 
   await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:E?key=${apiKey}`,
   )
     .then((response) => response.json())
-    .then((restaurantsObject) => handleResponse(restaurantsObject.values));
+    .then((restaurantsObject: object) => handleResponse(restaurantsObject));
 
   return (
     <main className="flex min-h-screen flex-col gap-4 text-white">
