@@ -1,32 +1,37 @@
+"use client";
+
 import Image from "next/image";
 
 import { auth } from "@/server/auth";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
-import type { JsonArray } from "next-auth/adapters";
+import { useFetch } from "@/lib/utils/hooks";
+import { useEffect, useState } from "react";
+import type { Session } from "next-auth";
 
-export default async function Home() {
-  const session = await auth();
+export default function Home() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [restaurntData, setRestaurantData] = useState([[""]]);
 
-  const apiKey = "AIzaSyDt8lur7UCIe5QA_WFlEZkMG0hm5cPJTsE";
-  const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
+  useEffect(() => {
+    async function fetchData() {
+      const data = await useFetch();
+      setRestaurantData(data);
+      setSession(await auth());
+    }
+    fetchData();
+  }, []);
 
   let header: string[] | undefined = [];
   let featuredList: string[][] = [];
 
-  function handleResponse(restaurantsObject: object) {
-    // eslint-disable-next-line
-    const tempArray: string[][] = Object.values(restaurantsObject)[2];
+  function handleResponse(tempArray: string[][]) {
     header = tempArray.shift();
 
     featuredList = tempArray.slice(0, 4);
   }
 
-  await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:E?key=${apiKey}`,
-  )
-    .then((response) => response.json())
-    .then((restaurantsObject: object) => handleResponse(restaurantsObject));
+  handleResponse(restaurntData);
 
   return (
     <main className="flex min-h-screen flex-col gap-4 text-white">
