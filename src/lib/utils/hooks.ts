@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 export function useFetch() {
-  const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
-  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_API_KEY;
+  const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_SPREADSHEET_ID;
 
   const { data } = useQuery({
     queryKey: ["repoData"],
