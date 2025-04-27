@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default async function RestaurantPage({
   params,
 }: {
@@ -40,12 +42,21 @@ export default async function RestaurantPage({
     });
   return (
     <div>
-      <div>My restaurant: </div>
-      <div>{restaurantName}</div>
-      <div>{discountType}</div>
-      <div>{discountDays}</div>
-      <div>{address}</div>
-      <div>{description}</div>
+      <div className="h-[30vh] overflow-hidden">
+        <Image
+          src="/restaurant.png"
+          width={3000}
+          height={100}
+          alt={`${restaurantName}`}
+          className="overflow-hidden"
+        />
+      </div>
+      <div className="p-8">
+        <div className="text-brand-gray text-2xl font-bold">
+          {restaurantName}
+        </div>
+        <div className="mx-auto my-5 w-full border border-gray-400"></div>
+      </div>
     </div>
   );
 }
