@@ -16,8 +16,6 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    GOOGLE_SHEETS_API_KEY: z.string(),
-    GOOGLE_SHEETS_SPREADSHEET_ID: z.string(),
   },
 
   /**
@@ -38,8 +36,6 @@ export const env = createEnv({
     AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
     AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
     NODE_ENV: process.env.NODE_ENV,
-    GOOGLE_SHEETS_API_KEY: process.env.GOOGLE_SHEETS_API_KEY,
-    GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
