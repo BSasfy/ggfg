@@ -1,37 +1,30 @@
 "use client";
 
 import Image from "next/image";
-
-import { auth } from "@/server/auth";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
 import { useFetch } from "@/lib/utils/hooks";
-import { useEffect, useState } from "react";
-import type { Session } from "next-auth";
 
 export default function Home() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [restaurntData, setRestaurantData] = useState([[""]]);
+  const restaurantData = useFetch();
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await useFetch();
-      setRestaurantData(data);
-      setSession(await auth());
-    }
-    fetchData();
-  }, []);
+  const apiKey = "AIzaSyDt8lur7UCIe5QA_WFlEZkMG0hm5cPJTsE";
+  const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
   let header: string[] | undefined = [];
-  let featuredList: string[][] = [];
+  let featuredRestaurantList: string[][] = [];
 
-  function handleResponse(tempArray: string[][]) {
-    header = tempArray.shift();
+  function handleResponse(restaurantDetails: string[][]) {
+    if (restaurantDetails) {
+      header = restaurantDetails.shift();
 
-    featuredList = tempArray.slice(0, 4);
+      featuredRestaurantList = restaurantDetails.slice(0, 4);
+    }
   }
 
-  handleResponse(restaurntData);
+  if (restaurantData) {
+    handleResponse(restaurantData);
+  }
 
   return (
     <main className="flex min-h-screen flex-col gap-4 text-white">
@@ -68,7 +61,7 @@ export default function Home() {
           </div>
         </div>
         <div className="text-brand-medium-gray grid grid-cols-2 gap-6 py-6 sm:gap-10 sm:py-10">
-          {featuredList.map((fetauredRestaurant, index) => (
+          {featuredRestaurantList.map((fetauredRestaurant, index) => (
             <div key={index}>
               <RestaurantCard
                 restaurantDetails={fetauredRestaurant}
