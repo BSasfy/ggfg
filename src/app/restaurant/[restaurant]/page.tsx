@@ -19,6 +19,8 @@ export default async function RestaurantPage({
   let address: string | undefined = "";
   // let googleMapsURL: string = "";
   let description: string | undefined = "";
+  let imgUrl: string | undefined = "";
+  let imgId: string | undefined = "17d3itcacvk9cj9zRCpuSS2YXUeYDPGfN";
 
   function handleResponse(restaurantsObject: object) {
     // eslint-disable-next-line
@@ -27,14 +29,25 @@ export default async function RestaurantPage({
     restaurantList = tempArray;
     restaurantList.forEach((element) => {
       if (element.includes(restaurantProfile)) {
-        [restaurantName, discountType, discountDays, address, description] =
-          element;
+        console.log(element);
+        [
+          restaurantName,
+          discountType,
+          discountDays,
+          address,
+          description,
+          imgUrl,
+        ] = element;
       }
     });
+    if (imgUrl) {
+      imgId = imgUrl.split("/").reverse()[1];
+      console.log(imgId, "<<<<");
+    }
   }
 
   await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:E?key=${apiKey}`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A:F?key=${apiKey}`,
   )
     .then((response) => response.json())
     .then((restaurantsObject: object) => {
@@ -44,7 +57,7 @@ export default async function RestaurantPage({
     <div>
       <div className="h-[30vh] overflow-hidden">
         <Image
-          src="/restaurant.png"
+          src={`https://drive.google.com/uc?id=${imgId}`}
           width={3000}
           height={100}
           alt={`${restaurantName}`}

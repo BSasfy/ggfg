@@ -5,6 +5,11 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [new URL("https://drive.google.com/**")],
+    domains: ["drive.google.com"],
+  },
+};
 
 export default config;
