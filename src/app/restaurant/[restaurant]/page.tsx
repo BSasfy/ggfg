@@ -51,11 +51,36 @@ export default async function RestaurantPage({
           className="overflow-hidden"
         />
       </div>
-      <div className="p-8">
-        <div className="text-brand-gray text-2xl font-bold">
-          {restaurantName}
+      <div className="p-8 text-center">
+        {/* restaurant name */}
+        <div className="text-4xl font-bold text-black">{restaurantName}</div>
+        <div className="mx-auto my-3 w-full border border-gray-400"></div>
+
+        {/* Offer type */}
+        <div className="text-brand-gray text-lg">Offer:</div>
+        <div className="text-xl md:text-2xl">{discountType}</div>
+        <div className="mx-auto my-3 w-[40vw] border-2 border-gray-300"></div>
+
+        {/* Offer Days */}
+        <div className="text-brand-gray text-lg">When?</div>
+        <div className="text-xl md:text-2xl">{discountDays}</div>
+        <div className="mx-auto my-3 w-[50vw] border-2 border-gray-300"></div>
+
+        {/* Booking */}
+        <div className="text-brand-gray text-lg">Booking required?</div>
+        {/* if link exists, say yes, book here. if no link, say no */}
+        <div className="flex flex-row justify-center gap-1">
+          <div className="text-xl md:text-2xl">Yes, </div>{" "}
+          <div className="text-xl md:text-2xl"> Book Here! </div>
         </div>
-        <div className="mx-auto my-5 w-full border border-gray-400"></div>
+        <div className="mx-auto my-3 w-[60vw] border-2 border-gray-300"></div>
+
+        {/* Description */}
+        <div className="text-brand-gray text-lg">Description:</div>
+        <div className="max-w-[80vw] justify-self-center text-xl md:text-2xl">
+          Type of food, atmosphere, dog friendly, kid friendly, etc
+        </div>
+        <div className="mx-auto my-3 w-[80vw] border-2 border-gray-300"></div>
       </div>
     </div>
   );

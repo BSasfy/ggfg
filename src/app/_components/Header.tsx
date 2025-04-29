@@ -20,7 +20,7 @@ export async function Header() {
         </p>
         <Link
           href={session ? "/api/auth/signout" : "/api/auth/signin"}
-          className="border-brand-gray rounded-full border-2 bg-white/10 px-8 py-3 text-2xl font-semibold no-underline transition hover:bg-white/20"
+          className="border-brand-gray rounded-full border-2 bg-white/10 px-6 py-2 text-lg font-semibold no-underline transition hover:bg-white/20 lg:text-2xl"
         >
           {session ? "Sign out" : "Sign in"}
         </Link>
