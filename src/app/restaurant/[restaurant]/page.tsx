@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RestaurantHeader } from "./_components/restaurant-header";
 
 export default async function RestaurantPage({
   params,
@@ -64,6 +65,7 @@ export default async function RestaurantPage({
           className="overflow-hidden"
         />
       </div>
+      <RestaurantHeader />
       <div className="p-8 text-center">
         {/* restaurant name */}
         <div className="text-4xl font-bold text-black">{restaurantName}</div>
