@@ -4,8 +4,16 @@ import Image from "next/image";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
 import { useFetch } from "@/lib/utils/hooks";
+import { auth } from "@/server/auth";
+import { useSession } from "next-auth/react";
+import { neon } from "@neondatabase/serverless";
+import create from "@/app/_components/databaseWriter";
 
 export default function Home() {
+  const { data: session } = useSession();
+
+  console.log(session, "<<<<");
+
   const restaurantData = useFetch();
 
   let header: string[] | undefined = [];
@@ -57,6 +65,17 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        <form action={create}>
+          <input
+            type="text"
+            placeholder="write a comment"
+            className="border border-black text-black"
+            name="comment"
+          />
+          <button type="submit" className="text-black">
+            Submit
+          </button>
+        </form>
         <div className="text-brand-medium-gray grid grid-cols-2 gap-6 py-6 sm:gap-10 sm:py-10">
           {featuredRestaurantList.map((fetauredRestaurant, index) => (
             <div key={index}>

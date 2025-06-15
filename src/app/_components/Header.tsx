@@ -4,6 +4,7 @@ import Image from "next/image";
 
 export async function Header() {
   const session = await auth();
+  // console.log(session?.user.id);
   return (
     <div className="bg-brand-blue flex flex-row items-center justify-between px-4">
       <Link href="/">

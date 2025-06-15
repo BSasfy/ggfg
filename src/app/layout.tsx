@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { Header } from "./_components/Header";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./_components/footer";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Glasgow's Good Food Group",
@@ -27,10 +28,12 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable}`}>
       <body className="bg-brand-soft-gray">
         <TRPCReactProvider>
-          <Analytics />
-          <Header />
-          {children}
-          <Footer />
+          <SessionProvider>
+            <Analytics />
+            <Header />
+            {children}
+            <Footer />
+          </SessionProvider>
         </TRPCReactProvider>
       </body>
     </html>
