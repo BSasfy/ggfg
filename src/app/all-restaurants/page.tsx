@@ -1,4 +1,4 @@
-import { auth } from "@/server/auth";
+import { auth } from "@/auth";
 import { RestaurantCard } from "../_components/restaurant-card";
 import type { JsonArray } from "next-auth/adapters";
 

@@ -4,13 +4,13 @@ import Image from "next/image";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
 import { useFetch } from "@/lib/utils/hooks";
-import { auth } from "@/server/auth";
+import { auth } from "@/auth";
 import { useSession } from "next-auth/react";
 import { neon } from "@neondatabase/serverless";
 import create from "@/app/_components/databaseWriter";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   console.log(session, "<<<<");
 

@@ -8,7 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { Header } from "./_components/Header";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./_components/footer";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Glasgow's Good Food Group",
