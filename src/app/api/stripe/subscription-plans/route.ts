@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("STRIPE_SECRET_KEY environment variable is required");
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2025-06-30.basil",
+});
 
 export async function GET() {
   try {
@@ -20,8 +26,8 @@ export async function GET() {
         name: product && "name" in product ? product.name : "Unknown Product",
         description:
           product && "description" in product ? product.description : "",
-        price: price.unit_amount || 0,
-        interval: recurring?.interval || "month",
+        price: price.unit_amount ?? 0,
+        interval: recurring?.interval ?? "month",
         price_id: price.id,
       };
     });

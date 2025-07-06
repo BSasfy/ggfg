@@ -34,8 +34,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   events: {
     createUser: async ({ user }) => {
+      if (!process.env.STRIPE_SECRET_KEY) {
+        throw new Error("STRIPE_SECRET_KEY environment variable is required");
+      }
+
       // Create stripe API client using the secret key env variable
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
         apiVersion: "2025-06-30.basil",
       });
 

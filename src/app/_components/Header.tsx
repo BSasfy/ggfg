@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 
 export async function Header() {
   const session = await auth();

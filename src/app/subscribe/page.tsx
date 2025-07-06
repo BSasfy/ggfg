@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "",
 );
 
 interface Plan {
@@ -23,7 +23,10 @@ export default function Subscriptions() {
     // Fetch subscription plans from your API
     fetch("/api/stripe/subscription-plans")
       .then((res) => res.json())
-      .then((data) => setPlans(data));
+      .then((data: Plan[]) => setPlans(data))
+      .catch((error) => {
+        console.error("Error fetching plans:", error);
+      });
   }, []);
 
   const handleSubscribe = async (priceId: string) => {
@@ -33,13 +36,13 @@ export default function Subscriptions() {
       return;
     }
 
-    const { sessionId } = await fetch("/api/stripe/create-checkout-session", {
+    const { sessionId } = (await fetch("/api/stripe/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ priceId }),
-    }).then((res) => res.json());
+    }).then((res) => res.json())) as { sessionId: string };
 
     const result = await stripe.redirectToCheckout({ sessionId });
 

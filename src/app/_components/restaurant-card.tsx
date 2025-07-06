@@ -10,8 +10,7 @@ export function RestaurantCard({
   restaurantDetails,
   isFeatured,
 }: RestaurantProps) {
-  const [name, discountType, discountDays, address, description] =
-    restaurantDetails;
+  const [name, discountType, discountDays, address] = restaurantDetails;
 
   const urlSlug = name?.replace(/\s+/g, "-");
 

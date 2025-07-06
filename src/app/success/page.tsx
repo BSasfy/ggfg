@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 export default function SuccessPage() {
@@ -9,32 +9,42 @@ export default function SuccessPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
-  useEffect(() => {
-    if (sessionId) {
-      fetchSessionStatus();
+  const fetchSessionStatus = useCallback(async () => {
+    try {
+      const response = await fetch("/api/stripe/check-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sessionId }),
+      });
+
+      const { session, error } = (await response.json()) as {
+        session?: { status: string; customer_email: string };
+        error?: string;
+      };
+
+      if (error) {
+        setStatus("failed");
+        console.error(error);
+        return;
+      }
+
+      if (session) {
+        setStatus(session.status);
+        setCustomerEmail(session.customer_email);
+      }
+    } catch (error) {
+      console.error("Error fetching session status:", error);
+      setStatus("failed");
     }
   }, [sessionId]);
 
-  async function fetchSessionStatus() {
-    const response = await fetch("/api/check-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sessionId }),
-    });
-
-    const { session, error } = await response.json();
-
-    if (error) {
-      setStatus("failed");
-      console.error(error);
-      return;
+  useEffect(() => {
+    if (sessionId) {
+      void fetchSessionStatus();
     }
-
-    setStatus(session.status);
-    setCustomerEmail(session.customer_email);
-  }
+  }, [sessionId, fetchSessionStatus]);
 
   if (status === "loading") {
     return <div>Loading...</div>;

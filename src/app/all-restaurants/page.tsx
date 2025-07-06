@@ -1,19 +1,15 @@
-import { auth } from "@/auth";
 import { RestaurantCard } from "../_components/restaurant-card";
-import type { JsonArray } from "next-auth/adapters";
 
 export default async function Restaurants() {
   const apiKey = "AIzaSyDt8lur7UCIe5QA_WFlEZkMG0hm5cPJTsE";
-  const session = await auth();
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
-  let header: string[] | undefined = [];
   let restaurantList: string[][] = [];
 
   function handleResponse(restaurantsObject: object) {
     // eslint-disable-next-line
     const tempArray: string[][] = Object.values(restaurantsObject)[2];
-    header = tempArray.shift();
+    tempArray.shift(); // Remove header
     restaurantList = tempArray;
   }
 

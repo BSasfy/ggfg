@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("STRIPE_SECRET_KEY environment variable is required");
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2025-06-30.basil",
+});
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET ?? "";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -18,10 +24,11 @@ export async function POST(request: Request) {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error verifying webhook signature:", err);
+    const errorMessage = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: `Webhook Error: ${err.message}` },
+      { error: `Webhook Error: ${errorMessage}` },
       { status: 400 },
     );
   }

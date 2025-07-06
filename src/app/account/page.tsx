@@ -11,7 +11,7 @@ export default function Account() {
       const response = await fetch("/api/stripe/create-portal-session", {
         method: "POST",
       });
-      const { url } = await response.json();
+      const { url } = (await response.json()) as { url: string };
       window.location.href = url;
     } catch (error) {
       console.error(error);

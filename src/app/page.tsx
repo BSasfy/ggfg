@@ -4,24 +4,21 @@ import Image from "next/image";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
 import { useFetch } from "@/lib/utils/hooks";
-import { auth } from "@/auth";
 import { useSession } from "next-auth/react";
-import { neon } from "@neondatabase/serverless";
 import create from "@/app/_components/databaseWriter";
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   console.log(session, "<<<<");
 
   const restaurantData = useFetch();
 
-  let header: string[] | undefined = [];
   let featuredRestaurantList: string[][] = [];
 
   function handleResponse(restaurantDetails: string[][]) {
     if (restaurantDetails) {
-      header = restaurantDetails.shift();
+      restaurantDetails.shift(); // Remove header
 
       featuredRestaurantList = restaurantDetails.slice(0, 4);
     }

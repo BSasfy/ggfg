@@ -11,22 +11,18 @@ export default async function RestaurantPage({
 
   const spreadsheetId = "1n9Bp5-CfU7-U_B10s3nYq3WUfUbyV-UgdAgjFkJ-XlA";
 
-  let header: string[] | undefined = [];
   let restaurantList: string[][] = [];
   const restaurantProfile: string = restaurant.replace(/-/g, " ");
   let restaurantName: string | undefined = "";
   let discountType: string | undefined = "";
   let discountDays: string | undefined = "";
-  let address: string | undefined = "";
-  // let googleMapsURL: string = "";
-  let description: string | undefined = "";
   let imgUrl: string | undefined = "";
   let imgId: string | undefined = "17d3itcacvk9cj9zRCpuSS2YXUeYDPGfN";
 
   function handleResponse(restaurantsObject: object) {
     // eslint-disable-next-line
     const tempArray: string[][] = Object.values(restaurantsObject)[2];
-    header = tempArray.shift();
+    tempArray.shift(); // Remove header
     restaurantList = tempArray;
     restaurantList.forEach((element) => {
       if (element.includes(restaurantProfile)) {
@@ -34,9 +30,10 @@ export default async function RestaurantPage({
         [
           restaurantName,
           discountType,
-          discountDays,
-          address,
-          description,
+          discountDays, // address (unused)
+          // description (unused)
+          ,
+          ,
           imgUrl,
         ] = element;
       }
