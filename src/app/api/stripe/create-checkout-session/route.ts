@@ -22,7 +22,7 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${request.headers.get("origin")}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${request.headers.get("origin")}/success`,
       cancel_url: `${request.headers.get("origin")}/subscriptions`,
     });
 

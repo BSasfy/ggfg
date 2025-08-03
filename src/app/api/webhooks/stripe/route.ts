@@ -9,8 +9,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2025-06-30.basil",
 });
-const endpointSecret =
-  "whsec_3678328d9c79104b17c8a78bf3eaaf49d4f07bda0e21f785b9350914371a29ba";
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET ?? "";
 
 export async function POST(request: Request) {
   const body = await request.text();
