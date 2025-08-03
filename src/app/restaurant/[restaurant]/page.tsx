@@ -31,16 +31,16 @@ export default async function RestaurantPage({
           restaurantName,
           discountType,
           discountDays, // address (unused)
+          ,
+          ,
           // description (unused)
-          ,
-          ,
           imgUrl,
         ] = element;
       }
     });
     if (imgUrl) {
       imgId = imgUrl.split("/").reverse()[1];
-      console.log(imgId, "<<<<");
+      console.log(imgId, "<imgId");
     }
   }
 

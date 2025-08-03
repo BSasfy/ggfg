@@ -21,6 +21,8 @@ export default async function Restaurants() {
       handleResponse(restaurantsObject);
     });
 
+  console.log(restaurantList, "restaurantList");
+
   return (
     <main className="text-brand-medium-gray flex min-h-screen flex-col gap-10 p-10">
       <div className="text-5xl">All Offers</div>

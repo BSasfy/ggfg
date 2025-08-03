@@ -3,16 +3,12 @@
 import Image from "next/image";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
-import { useFetch } from "@/lib/utils/hooks";
+import { useFetchRestaurants } from "@/lib/utils/hooks";
 import { useSession } from "next-auth/react";
 import create from "@/app/_components/databaseWriter";
 
 export default function Home() {
-  const { data: session } = useSession();
-
-  console.log(session, "<<<<");
-
-  const restaurantData = useFetch();
+  const restaurantData = useFetchRestaurants();
 
   let featuredRestaurantList: string[][] = [];
 

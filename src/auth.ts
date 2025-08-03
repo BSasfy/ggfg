@@ -31,6 +31,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     //     id: token.sub,
     //   },
     // }),
+    session: async ({ session, token }) => {
+      console.log(session, "<session");
+      console.log(token, "<token");
+      return session;
+    },
   },
   events: {
     createUser: async ({ user }) => {

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-export function useFetch() {
+export function useFetchRestaurants() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_API_KEY;
   const spreadsheetId = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_SPREADSHEET_ID;
 

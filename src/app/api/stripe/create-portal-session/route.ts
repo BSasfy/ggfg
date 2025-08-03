@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 export async function POST(request: Request) {
   try {
     // Get the customer ID from your database based on the authenticated user
-    const customerId = "cus_example123"; // Replace with actual customer ID retrieval logic
+    const customerId = "cus_Sl1GfsccNfro3r"; // Replace with actual customer ID retrieval logic
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
