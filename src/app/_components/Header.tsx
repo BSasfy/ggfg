@@ -1,9 +1,10 @@
 import { auth } from "@/auth";
+import type { Session } from "next-auth";
 import Link from "next/link";
 import Image from "next/image";
 
 export async function Header() {
-  const session = await auth();
+  const session: Session | null = await auth();
   // console.log(session?.user.id);
   return (
     <div className="bg-brand-blue flex flex-row items-center justify-between px-4">
