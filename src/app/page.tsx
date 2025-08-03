@@ -4,7 +4,6 @@ import Image from "next/image";
 import { RestaurantCard } from "./_components/restaurant-card";
 import Link from "next/link";
 import { useFetchRestaurants } from "@/lib/utils/hooks";
-import { useSession } from "next-auth/react";
 import create from "@/app/_components/databaseWriter";
 
 export default function Home() {

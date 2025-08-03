@@ -1,6 +1,6 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
-import NextAuth from "next-auth";
+import { type NextAuthOptions } from "next-auth";
 import { prisma } from "@/lib/prisma-edge";
 import DiscordProvider from "next-auth/providers/discord";
 import GitHubProvider from "next-auth/providers/github";
@@ -19,7 +19,7 @@ if (!process.env.GITHUB_CLIENT_ID)
 if (!process.env.GITHUB_CLIENT_SECRET)
   throw new Error("GITHUB_CLIENT_SECRET is required");
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
   providers: [
     Google({
@@ -73,4 +73,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
     },
   },
-});
+};

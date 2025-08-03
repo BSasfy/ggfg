@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
-import { TRPCReactProvider } from "@/trpc/react";
+// import { TRPCReactProvider } from "@/trpc/react";
 
 import { Header } from "./_components/Header";
 import { Analytics } from "@vercel/analytics/react";
@@ -27,14 +27,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className="bg-brand-soft-gray">
-        <TRPCReactProvider>
-          <SessionProvider>
-            <Analytics />
-            <Header />
-            {children}
-            <Footer />
-          </SessionProvider>
-        </TRPCReactProvider>
+        {/* <TRPCReactProvider> */}
+        <SessionProvider>
+          <Analytics />
+          <Header />
+          {children}
+          <Footer />
+        </SessionProvider>
+        {/* </TRPCReactProvider> */}
       </body>
     </html>
   );

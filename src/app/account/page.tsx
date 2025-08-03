@@ -1,6 +1,6 @@
 "use client";
 
-export default async function Account() {
+export default function Account() {
   const handleManageSubscription = async () => {
     try {
       const response = await fetch("/api/stripe/create-portal-session", {

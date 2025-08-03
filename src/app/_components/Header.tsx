@@ -1,11 +1,9 @@
-import { auth } from "@/auth";
-import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 
-export async function Header() {
-  const session: Session | null = await auth();
-  // console.log(session?.user.id);
+export function Header() {
+  const { data: session } = useSession();
   return (
     <div className="bg-brand-blue flex flex-row items-center justify-between px-4">
       <Link href="/">
