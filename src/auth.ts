@@ -6,6 +6,11 @@ import { prisma } from "@/lib/prisma-edge";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  logger: {
+    error(code, ...message) {
+      console.error(code, message);
+    },
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHub({
@@ -20,11 +25,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }),
     // ...add more providers here
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+  // secret: process.env.NEXTAUTH_SECRET,
+  // session: {
+  //   strategy: "jwt",
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  // },
   pages: {
     signIn: "/auth/sign-in",
     // signOut: "/logout",
@@ -57,24 +62,24 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         });
     },
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        return {
-          ...token,
-          id: user.id,
-        };
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id as string,
-        },
-      };
-    },
-  },
+  // callbacks: {
+  //   async jwt({ token, user }) {
+  //     if (user) {
+  //       return {
+  //         ...token,
+  //         id: user.id,
+  //       };
+  //     }
+  //     return token;
+  //   },
+  //   async session({ session, token }) {
+  //     return {
+  //       ...session,
+  //       user: {
+  //         ...session.user,
+  //         id: token.id as string,
+  //       },
+  //     };
+  //   },
+  // },
 });
