@@ -4,23 +4,24 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model User {
-  id                    String          @id @default(cuid())
-  name                  String?
-  email                 String          @unique
-  emailVerified         DateTime?
-  image                 String?
-  createdAt             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
-  stripeCustomerId      String?         @unique
+  id               String          @id @default(cuid())
+  name             String?
+  email            String          @unique
+  emailVerified    DateTime?
+  image            String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  stripeCustomerId String?         @unique
   hasActiveSubscription Boolean         @default(false)
-  accounts              Account[]
-  Authenticator         Authenticator[]
-  sessions              Session[]
+  accounts         Account[]
+  Authenticator    Authenticator[]
+  sessions         Session[]
 }
 
 model Account {

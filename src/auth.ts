@@ -2,15 +2,16 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Stripe from "stripe";
-import { prisma } from "@/lib/prisma-edge";
+import prisma from "prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   logger: {
     error(code, ...message) {
-      console.error(code, message);
+      console.error(code.cause, message);
     },
   },
+  debug: true,
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHub({
