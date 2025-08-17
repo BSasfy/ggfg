@@ -1,50 +1,34 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import Google from "next-auth/providers/google";
 import NextAuth from "next-auth";
-import { prisma } from "@/lib/prisma-edge";
-import DiscordProvider from "next-auth/providers/discord";
-import GitHubProvider from "next-auth/providers/github";
+import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import Stripe from "stripe";
+import { prisma } from "@/lib/prisma-edge";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
-// Validate required environment variables
-if (!process.env.AUTH_GOOGLE_ID) throw new Error("AUTH_GOOGLE_ID is required");
-if (!process.env.AUTH_GOOGLE_SECRET)
-  throw new Error("AUTH_GOOGLE_SECRET is required");
-if (!process.env.AUTH_DISCORD_ID)
-  throw new Error("AUTH_DISCORD_ID is required");
-if (!process.env.AUTH_DISCORD_SECRET)
-  throw new Error("AUTH_DISCORD_SECRET is required");
-if (!process.env.GITHUB_CLIENT_ID)
-  throw new Error("GITHUB_CLIENT_ID is required");
-if (!process.env.GITHUB_CLIENT_SECRET)
-  throw new Error("GITHUB_CLIENT_SECRET is required");
-
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  secret: process.env.AUTH_SECRET,
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
-    DiscordProvider({
-      clientId: process.env.AUTH_DISCORD_ID,
-      clientSecret: process.env.AUTH_DISCORD_SECRET,
-    }),
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
+    // ...add more providers here
   ],
-  adapter: PrismaAdapter(prisma),
-  //   pages: {
-  //     signIn: "/signin",
-  //   },
-  callbacks: {
-    session: async ({ session, token }) => {
-      console.log(session, "<session");
-      console.log(token, "<token");
-      return session;
-    },
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  pages: {
+    signIn: "/auth/sign-in",
+    // signOut: "/logout",
+    // error: "/auth/error",
   },
   events: {
     createUser: async ({ user }) => {
@@ -71,6 +55,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           });
         });
+    },
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id as string,
+        },
+      };
     },
   },
 });
