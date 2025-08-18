@@ -34,7 +34,7 @@ export async function GET() {
 
     return NextResponse.json(plans);
   } catch (error) {
-    console.error(error);
+    console.error("subscription-plans error", error);
     return NextResponse.json(
       { error: "Error fetching subscription plans" },
       { status: 500 },
