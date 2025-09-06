@@ -9,7 +9,7 @@ export default async function Account() {
       const { url } = (await response.json()) as { url: string };
       window.location.href = url;
     } catch (error) {
-      console.error(error);
+      console.error("account page error", error);
     } finally {
       console.log("success");
     }

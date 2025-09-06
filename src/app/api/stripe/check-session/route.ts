@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ session });
   } catch (error) {
+    console.error("check-session error");
     return NextResponse.json(
       { error: error instanceof Error ? error.message : String(error) },
       { status: 400 },
