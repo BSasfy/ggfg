@@ -14,6 +14,7 @@ export async function POST(request: Request) {
 
   try {
     const session = await stripe.checkout.sessions.create({
+      customer: "cus_T0S8IcsTgm3Fff",
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [
@@ -22,6 +23,7 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
+      //here
       success_url: `${request.headers.get("origin")}/success`,
       cancel_url: `${request.headers.get("origin")}/subscriptions`,
     });

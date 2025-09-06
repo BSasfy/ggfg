@@ -46,6 +46,8 @@ export default function Subscriptions() {
 
     const result = await stripe.redirectToCheckout({ sessionId });
 
+    console.log(result, "result");
+
     if (result.error) {
       console.error(result.error);
     }
